@@ -1,0 +1,92 @@
+<input> 6 1 2 3 7 5 4
+read 1
+load 1
+store 2
+
+load 2
+add =3
+store 2
+;для (каждого i от 0 до N-1)
+
+read_loop:
+	read *2
+	
+	load 2
+	sub =1
+	store 2
+	
+	load 2
+	sub =3
+	jz prepare_for_sort	
+
+	load 2
+	sub =1
+	jgtz read_loop
+
+prepare_for_sort:	
+	load 2
+	add 1
+	store 2	
+;r2 - i
+
+
+i_cycle:
+	load 2
+	sub =1
+	store 3
+;r3 - k
+	k_cycle:	
+		load *2
+		sub *3
+		
+		jgtz update_k_counter
+		
+		load *2
+		add *3
+		store *2
+
+		load *3
+		mul =-1
+		add *2
+		store *3
+
+		load *2
+		sub *3
+		store *2
+
+		jmp update_k_counter	
+
+		update_k_counter:
+			load 3
+			sub =1
+			store 3
+			sub =3
+			jz update_i_counter	
+			jmp k_cycle
+	update_i_counter:
+		load 2
+		sub =1
+		store 2
+		sub =4
+		jz print_sequence
+		jmp i_cycle
+		
+print_sequence:	
+	load 1
+	jz exit
+	load =4
+	store 3
+	
+	print_loop:
+		write *3
+		load 3
+		add =1
+		store 3
+
+		load 1
+		sub =1
+		store 1
+		jz exit		
+		jgtz print_loop
+exit:	
+halt
